@@ -1,6 +1,10 @@
+/*
+Takes the SSS_Data1.txt and SSS_Data2.txt as inputs. The goal of this project is to illustrate the process of 
+Dijsktra's Algorithm. 
+*/
+
 import java.io.*;
 import java.util.*;
-
 
 class DijsktraSSS{
     int numNodes;
@@ -11,7 +15,8 @@ class DijsktraSSS{
     int parentAry[];
     int toDoArray[];
     int bestArray[];
-    
+
+    //Constructor: initializes all the arrays.  
     DijsktraSSS(int numberofNodes){
         numNodes = numberofNodes;
         costMatrix = new int[numNodes+1][numNodes+1];
@@ -105,7 +110,6 @@ class DijsktraSSS{
     }
 
     int findMinNode(){
-
         int minCost = 99999;
         int minNode = 0;
         int index = 1;
@@ -126,37 +130,31 @@ class DijsktraSSS{
 
 public class HouE_Project6_Main {
     public static void main(String[] args) throws IOException{
-
         Scanner inFile = new Scanner(new FileReader(args[0]));
         FileWriter outFile = new FileWriter(args[1]);
         FileWriter debugFile = new FileWriter(args[2]);
         
         int numberofNodes = inFile.nextInt();
-
         DijsktraSSS pathCaller = new DijsktraSSS(numberofNodes);
         
         pathCaller.sourceNode = 1;
-        
         pathCaller.loadCostMatrix(inFile);
         
         while(pathCaller.sourceNode <= pathCaller.numNodes){ 
-            //Step 2 : Completed 
+        //Starting from the initial node, we analyze each possible path
           pathCaller.setBestAry(pathCaller.sourceNode);
           pathCaller.setParentAry(pathCaller.sourceNode);
           pathCaller.setToDoAry(pathCaller.sourceNode);
         
-          //Step 8: Completed.
           while(pathCaller.toDoEmptyCheck() != true){
-            //Step 3: Completed.
            pathCaller.minNode = pathCaller.findMinNode();
            pathCaller.toDoArray[pathCaller.minNode] = 0;
            
-           //Step 4: Completed.
            int childNode = 1;
           
            while(childNode <= numberofNodes){ // Step 7:
             if(pathCaller.toDoArray[childNode] == 1){
-                //Step 5: Completed.
+
               int newCost = pathCaller.computeCost(pathCaller.minNode, childNode);
               if(newCost < pathCaller.bestArray[childNode]){
                   pathCaller.bestArray[childNode] = newCost;
@@ -164,7 +162,6 @@ public class HouE_Project6_Main {
                   pathCaller.debugPrint(debugFile);
               }
          }
-         //Step 6:
            childNode++;
     }
 }
